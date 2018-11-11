@@ -12,7 +12,7 @@
 import flask
 from flask import Flask, Response, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
-import flask.ext.login as flask_login
+import flaskext.login as flask_login
 
 # for image uploading
 # from werkzeug import secure_filename
