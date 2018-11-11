@@ -367,13 +367,13 @@ def addTag():
     if request.method == 'POST':
         cursor = conn.cursor()
         photo_id = request.form.get('photo_id')
-        print photo_id
+        print (photo_id)
         tag = request.form.get('tag')
         q = "INSERT INTO Tag (tag, photo_id) VALUES ('{0}','{1}')".format(tag, photo_id)
         cursor.execute(q)
         #cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name, uid))
         conn.commit()
-        print 'done'
+        print ('done')
         return render_template('addTag.html', message = 'SUCCESS!')
     else:
         return render_template('addTag.html')
