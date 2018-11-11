@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD LIKES</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+            <p>Please do not like a photo twice!</p>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('addLikes') }}">
+                <label for="integer">Enter the photo id that you like:</label>
+                <input type="integer" name="photo_id" /><br>
+                <input type="submit" />
+            </form>
+         </div>
+
+    </body>
+    <a href='/'>Home</a>
+</body>
+</html>

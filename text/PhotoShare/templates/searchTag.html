@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>searchTag</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+        </div>
+        <div id="content">
+            <form method="POST" action="{{ url_for('searchTag') }}">
+                <label for="tag">Search the Tag:</label>
+                <input type="text" name="tag" /><br />
+                <input type="submit" />
+            </form>
+         </div>
+    </body>
+
+    <h2>Here are the photos with the Tag</h2>
+    <ul>
+    {% for photo in photos %}
+		<li><img src={{photo[0]}}/></li>
+        <li>Caption: {{photo[1]}}</li>
+        <li>Photo ID: {{photo[2]}}</li>
+        <li>Album name:{{photo[3]}}</li>
+		<li>First Name: {{photo[4]}}</li>
+		<li>Last Name: {{photo[5]}}</li>
+		<li>user's email: {{photo[6]}}</li>
+        <li>tag: {{photo[7]}}</li>
+		<li>Album ID: {{photo[8]}}</li>
+    {% endfor %}
+    </ul>
+    <a href='/'>Home</a>
+</body>
+</html>

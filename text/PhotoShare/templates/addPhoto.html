@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Photo</title>
+</head>
+<body>
+	{% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Add photos to album</h1>
+			<p>Enter your information below</p>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('addPhoto') }}">
+                <label for="photo_id">Enter the picture id that you want to add:</label>
+                <input type="integer" name="photo_id" /><br />
+                <label for="album_id">Enter the album id of the target album:</label>
+                <input type="integer" name="album_id" /><br />
+                <input type="submit" />
+            </form>
+        </div>
+<a href='/'>Home</a>
+</body>
+</html>

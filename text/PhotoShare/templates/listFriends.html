@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Here is your friend list</title>
+</head>
+<body>
+    <h2>Here are your Friends</h2>
+    <ul>
+    {% for friend in row %}
+		<li>User's email: {{friend[2]}}</li>
+        <li>First name: {{friend[0]}}</li>
+        <li>Last name: {{friend[1]}}</li>
+    {% endfor %}
+    </ul>
+    <a href='/'>Home</a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>activity</title>
+</head>
+<body>
+    <h2>Here are the top 10 active Users</h2>
+    <ul>
+    {% for u in rows %}
+        <li>User's email: {{u[2]}}</li>
+        <li>First name: {{u[0]}}</li>
+        <li>Last name: {{u[1]}}</li>
+    {% endfor %}
+    </ul>
+    <a href='/'>Home</a>
+</body>
+</html>

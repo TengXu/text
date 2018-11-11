@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addAlbum</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <p>Enter your information below<br>
+                Please make sure you don't use the same album name twice</p>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('addAlbum') }}">
+                <label for="name">Enter the album name:</label>
+                <input type="text" name="name" /><br>
+                <input type="submit" />
+            </form>
+         </div>
+    <a href='/'>Home</a>
+</body>
+</html>

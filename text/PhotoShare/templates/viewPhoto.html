@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>checkAllPhotos</title>
+</head>
+<body>
+<h2>Here are all the photos</h2>
+    <ul>
+    {% for photo in photos %}
+	    <li><img src={{photo[0]}}/></li>
+        <li>Caption: {{photo[1]}}</li>
+        <li>Photo ID: {{photo[2]}}</li>
+		<li>User's email: {{photo[3]}}</li>
+        <li>First name: {{photo[4]}}</li>
+        <li>Last name: {{photo[5]}}</li>
+    {% endfor %}
+    </ul>
+
+<a href='/'>Home</a>
+
+</body>
+</html>

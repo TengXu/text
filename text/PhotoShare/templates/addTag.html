@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addTag</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('addTag') }}">
+                <label for="photo_id">Enter the Photo Id that you want to add a tag:</label>
+                <input type="integer" name="photo_id" /><br>
+                <label for="tag">Enter the tag:</label>
+                <input type="text" name="tag" /><br>
+                <input type="submit" />
+            </form>
+         </div>
+    <a href='/'>Home</a>
+</body>
+</html>

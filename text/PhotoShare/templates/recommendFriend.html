@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>recommendFriend</title>
+</head>
+<body>
+
+<h2>Here are the Recommended friend for you</h2>
+    <ul>
+    {% for u in rows %}
+        <li>Recommended friend: {{u[0]}}</li>
+    {% endfor %}
+    </ul>
+<a href='/'>Home</a>
+</body>
+</html>

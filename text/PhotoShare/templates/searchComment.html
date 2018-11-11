@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Comment</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+        </div>
+        <div id="content">
+            <form method="POST" action="{{ url_for('searchComment') }}">
+                <label for="comment">Search the Comment:</label>
+                <input type="text" name="comment" /><br>
+                <input type="submit" />
+            </form>
+         </div>
+    </body>
+
+    <h2>Here are the photos</h2>
+    <ul>
+    {% for photo in photos %}
+        <li>Picture_id: {{photo[1]}}</li>
+        <li>The album name: {{photo[2]}}</li>
+        <li>album id: {{photo[5]}}</li>
+        <li>user's email: {{photo[3]}}</li>
+        <img src={{photo[0]}}/></li>
+    {% endfor %}
+    </ul>
+    <a href='/'>Home</a>
+</body>
+</html>

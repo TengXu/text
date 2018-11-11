@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deleteAlbum</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('deleteAlbum') }}">
+                <label for="album_id">Enter the album id that you want to delete:</label>
+                <input type="integer" name="album_id" /><br />
+                <label for="album_name">Enter the album name that you want to delete:</label>
+                <input type="text" name="name" /><br />
+                <input type="submit" />
+            </form>
+         </div>
+    <a href='/'>Home</a>
+</body>
+</html>

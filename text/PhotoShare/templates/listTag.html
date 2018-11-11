@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My photo with tag</title>
+</head>
+<body>
+<p>Here are the photos</p>
+    <ul>
+    {% for photo in photos %}
+		<li><img src={{photo[0]}}/></li>
+        <li>Caption: {{photo[1]}}</li>
+        <li>Photo ID: {{photo[2]}}</li>
+        <li>Album name:{{photo[3]}}</li>
+        <li>Album ID: {{photo[4]}}<br>
+        <li>Tag: {{photo[5]}}<br>
+    {% endfor %}
+    </ul>
+    <a href='/'>Home</a>
+</body>
+</html>

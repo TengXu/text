@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD COMMENT</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% endif %}
+        <div class="title">
+            <h1>Enter your information below</h1>
+        </div>
+        <div id="content">
+            <form method="post" action="{{ url_for('addComment') }}">
+                <label for="integer">Enter the picture id that you want to comment:</label>
+                <input type="integer" name="photo_id" /><br>
+                <label for="comment">Enter the comment you want to add:</label>
+                <input type="text" name="text" /><br>
+                <input type="submit" />
+            </form>
+         </div>
+
+    <a href='/'>Home</a>
+</body>
+</html>
