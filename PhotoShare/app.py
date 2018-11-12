@@ -397,7 +397,7 @@ def deletePhoto():
 		
 @app.route('/deleteText', methods = ['POST','GET'])
 @flask_login.login_required
-def deletePhoto():
+def deleteText():
     if request.method == 'POST':
         cursor = conn.cursor()
         tid = request.form.get('text_id')
