@@ -8,9 +8,8 @@
     <h2>Here are your Friends</h2>
     <ul>
     {% for friend in row %}
-		<li>User's email: {{friend[2]}}</li>
-        <li>First name: {{friend[0]}}</li>
-        <li>Last name: {{friend[1]}}</li>
+		<li>Username: {{friend[0]}}</li>
+        <li>Latest Post: {{friend[1]}}</li>
     {% endfor %}
     </ul>
     <a href='/'>Home</a>

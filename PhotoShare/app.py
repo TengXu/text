@@ -85,14 +85,7 @@ def new_page_function():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if flask.request.method == 'GET':
-        return '''
-			   <form action='login' method='POST'>
-				<input type='text' name='email' id='email' placeholder='email'></input>
-				<input type='password' name='password' id='password' placeholder='password'></input>
-				<input type='submit' name='submit'></input>
-			   </form></br>
-		   <a href='/'>Home</a>
-			   '''
+        return render_template('login.html')
     # The request method is POST (page is recieving data)
     email = flask.request.form['email']
     cursor = conn.cursor()
@@ -290,7 +283,7 @@ def addFriends():
 def listFriends():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT u.firstname, u.lastname, u.email FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
+    cursor.execute("SELECT u.username, t.content FROM Friends f, Users u, Text t WHERE f.user_id = '{0}' and f.friend_id = u.user_id and t.user_id=t.user_id".format(uid))
     return render_template('listFriends.html',row=cursor.fetchall())
 
 #Activity
