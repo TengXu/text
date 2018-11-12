@@ -365,7 +365,7 @@ def listText():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
     t = getUsersTexts(uid)
-    # cursor.execute("SELECT t.caption, t.content FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
+    # cursor.execute("SELECT t.caption, t.content, t.post_time FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
 	
 @app.route('/listPhoto', methods=['GET'])
