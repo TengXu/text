@@ -403,7 +403,9 @@ def deleteText():
         tid = request.form.get('text_id')
         cursor.execute("DELETE FROM Text WHERE text_id = '{0}'".format(tid))
         conn.commit()
-        return render_template('listText.html', message = 'Success!')
+		uid = getUserIdFromEmail(flask_login.current_user.id) 
+		t = getUsersTexts(uid)
+        return render_template('listText.html', texts = t)
     else:
         return render_template('listText.html')
 
