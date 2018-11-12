@@ -163,6 +163,11 @@ def getUsersPhotos(uid):
     cursor = conn.cursor()
     cursor.execute("SELECT photopath, photo_id, caption FROM Photo WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall()  # NOTE list of tuples, [(photopath, pid), ...]
+	
+def getUsersTexts(uid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT caption, content FROM Photo WHERE user_id = '{0}'".format(uid))
+    return cursor.fetchall() 
 
 
 def getUserIdFromEmail(email):
@@ -354,8 +359,8 @@ def viewPhoto():
 def listText():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
-    p = getUsersPhotos(uid)
-    cursor.execute("SELECT t.caption, t.content FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
+    t = getUsersTexts(uid)
+    # cursor.execute("SELECT t.caption, t.content FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
 	
 @app.route('/listPhoto', methods=['GET'])
