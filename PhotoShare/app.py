@@ -233,7 +233,7 @@ def upload_text():
     if request.method == 'POST':
         uid = getUserIdFromEmail(flask_login.current_user.id)
 		content = request.form.get('content')
-        caption = request.form.get('caption')
+		caption = request.form.get('caption')
         cursor = conn.cursor()
         cursor.execute(
         "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption))
