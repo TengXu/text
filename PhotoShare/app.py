@@ -223,7 +223,7 @@ def upload_file():
     else:
         return render_template('upload.html')
 
-		def allowed_file(filename):
+def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
