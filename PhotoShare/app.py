@@ -131,9 +131,9 @@ def register():
 @app.route("/register", methods=['POST'])
 def register_user():
     try:
-		username = request.form.get('username')
-        firstname = request.form.get('firstname')
-        lastname = request.form.get('lastname')
+		username = request.form.get('username') 
+		firstname = request.form.get('firstname') 
+		lastname = request.form.get('lastname')
         email = request.form.get('email')
         password = request.form.get('password')
     except:
