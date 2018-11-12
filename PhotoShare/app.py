@@ -405,9 +405,9 @@ def deleteText():
 		conn.commit() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
 		t = getUsersTexts(uid)
-        return render_template('listText.html', texts = t)
-    else:
-        return render_template('listText.html')
+		return render_template('listText.html', texts = t) 
+	else:
+		return render_template('listText.html')
 
 #Tag
 # @app.route('/addTag', methods = ['POST','GET'])
