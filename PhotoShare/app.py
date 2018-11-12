@@ -283,7 +283,7 @@ def addFriends():
 def listFriends():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT u.username, t.content FROM Friends f, Users u, Text t WHERE f.user_id = '{0}' and f.friend_id = u.user_id and t.user_id=t.user_id".format(uid))
+    cursor.execute("SELECT u.username, TOP 1 t.content FROM Friends f, Users u, Text t WHERE f.user_id = '{0}' and f.friend_id = u.user_id and t.user_id=t.user_id".format(uid))
     return render_template('listFriends.html',row=cursor.fetchall())
 
 #Activity
