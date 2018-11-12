@@ -150,16 +150,16 @@ def register_user():
         print("couldn't find all tokens")
         return flask.redirect(flask.url_for('register'))
 
-
-def getUsersPhotos(uid):
-    cursor = conn.cursor()
-    cursor.execute("SELECT photopath, photo_id, caption FROM Photo WHERE user_id = '{0}'".format(uid))
-    return cursor.fetchall()  # NOTE list of tuples, [(photopath, pid), ...]
 	
 def getUsersTexts(uid):
     cursor = conn.cursor()
     cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall() 
+	
+def getTexts(tid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE text_id = '{0}'".format(tid))
+    return cursor.fetchall()
 	
 def getUsersLikes(tid):
     cursor = conn.cursor()
@@ -386,7 +386,7 @@ def viewLikes():
 		tid = request.form.get('text_id')
 		n = getUsersLikes(tid) 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		t = getUsersTexts(uid) 
+		t = getTexts(tid)
 		return render_template('listText.html', texts = t, names = n) 
 	else: 
 		return render_template('listText.html')
