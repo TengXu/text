@@ -10,7 +10,14 @@
     {% for text in texts %}
         <li>caption: {{text[0]}}</li>
         <li>content: {{text[1]}}</li>
-		<li>Posted on: <time datetime={{text[2]}}></li>
+		<li>Posted on: <time datetime="{{text[2]}}"></li>
+		<li>        
+		<form method="post" action="/deleteText">
+            <label for="integer">Enter the picture id that you want to delete:</label>
+            <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
+            <input type="submit" value="Delete" />
+        </form>
+		</li>
     {% endfor %}
     </ul>
 

@@ -365,7 +365,7 @@ def listText():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
     t = getUsersTexts(uid)
-    # cursor.execute("SELECT t.caption, t.content, t.post_time FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
+    # cursor.execute("SELECT t.caption, t.content, t.post_time, t.text_id FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
 	
 @app.route('/listPhoto', methods=['GET'])
@@ -390,6 +390,18 @@ def deletePhoto():
         #print(uid)
         pid = request.form.get('photo_id')
         cursor.execute("DELETE FROM Photo p WHERE p.photo_id = pid")
+        conn.commit()
+        return render_template('deletePhoto.html', message = 'Success!')
+    else:
+        return render_template('deletePhoto.html')
+		
+@app.route('/deleteText', methods = ['POST','GET'])
+@flask_login.login_required
+def deletePhoto():
+    if request.method == 'POST':
+        cursor = conn.cursor()
+        tid = request.form.get('text_id')
+        cursor.execute("DELETE FROM Text t WHERE t.text_id = tid")
         conn.commit()
         return render_template('deletePhoto.html', message = 'Success!')
     else:
