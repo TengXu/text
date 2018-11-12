@@ -166,7 +166,7 @@ def getUsersPhotos(uid):
 	
 def getUsersTexts(uid):
     cursor = conn.cursor()
-    cursor.execute("SELECT caption, content FROM Photo WHERE user_id = '{0}'".format(uid))
+    cursor.execute("SELECT caption, content FROM Text WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall() 
 
 
