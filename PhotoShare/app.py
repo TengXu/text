@@ -403,9 +403,9 @@ def deleteText():
         tid = request.form.get('text_id')
         cursor.execute("DELETE FROM Text t WHERE t.text_id = tid")
         conn.commit()
-        return render_template('deletePhoto.html', message = 'Success!')
+        return render_template('listText.html', message = 'Success!')
     else:
-        return render_template('deletePhoto.html')
+        return render_template('listText.html')
 
 #Tag
 # @app.route('/addTag', methods = ['POST','GET'])
