@@ -227,10 +227,10 @@ def upload_file():
 # end photo uploading code
 
 
-default page
-# @app.route("/", methods=['GET'])
-# def hello():
-    # return render_template('hello.html', message='Welecome to Photoshare')
+# default page
+@app.route("/", methods=['GET'])
+def hello():
+    return render_template('hello.html', message='Welecome to Photoshare')
 
 #Friends
 @app.route('/searchUsers', methods= ['POST','GET'])
