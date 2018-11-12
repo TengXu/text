@@ -134,8 +134,8 @@ def register_user():
 		username = request.form.get('username') 
 		firstname = request.form.get('firstname') 
 		lastname = request.form.get('lastname')
-        email = request.form.get('email')
-        password = request.form.get('password')
+		email = request.form.get('email') 
+		password = request.form.get('password')
     except:
         print(
             "couldn't find all tokens")  # this prints to shell, end users will not see this (all print statements go to shell)
