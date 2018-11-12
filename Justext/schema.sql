@@ -1,5 +1,5 @@
-CREATE DATABASE photoshare;
-USE photoshare;
+CREATE DATABASE Justext;
+USE Justext;
 
 CREATE TABLE Users (
   user_id int NOT NULL AUTO_INCREMENT,
@@ -89,6 +89,3 @@ CREATE TABLE Activity(
   CONSTRAINT PRIMARY KEY (user_id),
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
-
-INSERT INTO Users (username, email, password) VALUES ('test', 'test@gatech.edu', 'test');
-INSERT INTO Users (username, email, password) VALUES ('test1', 'test1@gatech.edu', 'test');

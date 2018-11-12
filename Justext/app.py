@@ -24,7 +24,7 @@ app.secret_key = 'super secret string'  # Change this!
 # These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'sat2200'
-app.config['MYSQL_DATABASE_DB'] = 'photoshare'
+app.config['MYSQL_DATABASE_DB'] = 'Justext'
 app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 mysql.init_app(app)
 
@@ -200,52 +200,12 @@ def isEmailUnique(email):
         return False
     else:
         return True
-
-
 # end login code
 
 @app.route('/profile')
 @flask_login.login_required
 def protected():
     return render_template('hello.html', name=getUserNameFromEmail(flask_login.current_user.id), message="Here's your profile")
-
-
-# begin photo uploading code
-# photos uploaded using base64 encoding so they can be directly embeded in HTML 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-
-upload_folder = '/Users/Teng/PhotoShare/static'
-app.config['upload_folder'] = upload_folder
-@app.route('/upload', methods=['GET', 'POST'])
-@flask_login.login_required
-def upload_file():
-    if request.method == 'POST':
-        uid = getUserIdFromEmail(flask_login.current_user.id)
-        imgfile = request.files['photo']
-        filename = imgfile.filename
-        caption = request.form.get('caption')
-        imgfile.save(os.path.join(app.config['upload_folder'], filename))
-        #photo_data = base64.standard_b64encode(imgfile.read())
-        photopath = "static/"+filename
-        cursor = conn.cursor()
-        cursor.execute(
-        "INSERT INTO Photo (photopath, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(photopath, uid, caption))
-        conn.commit()
-        cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
-        conn.commit()
-        return render_template('hello.html', name=getUserNameFromEmail(flask_login.current_user.id), message='Photo uploaded!',
-                               photos=getUsersPhotos(uid), photopath= photopath)
-    # The method is GET so we return a  HTML form to upload the a photo.
-    else:
-        return render_template('upload.html')
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 @app.route('/upload_text', methods=['GET', 'POST'])
@@ -316,15 +276,6 @@ def listFriendsText():
 		return render_template('listFriendsText.html', name=getUserNameFromUid(uid), texts=t) 
 	else: 
 		return render_template('listFriendsText.html')
-	
-
-#Activity
-@app.route('/top10Activity', methods = ['GET'])
-def top10Activity():
-    cursor = conn.cursor()
-    cursor.execute("SELECT u.firstname, u.lastname, u.email FROM Users u, Activity a WHERE u.user_id = a.user_id ORDER BY a.activity DESC LIMIT 10")
-    p = cursor.fetchall()
-    return render_template('top10Activity.html', rows = p)
 
 #viewPhoto
 @app.route('/viewPhoto', methods = ['GET'])
@@ -422,6 +373,8 @@ def addComment():
 		t = getUsersTextsByDate(fid) 
 		cursor.execute("INSERT INTO Comment (user_id, text_id, text) VALUES ('{0}','{1}','{2}')".format(uid, tid, ctext))
 		conn.commit() 
+		cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
+        conn.commit()
 		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
 	else: 
 		return render_template('listFriendsText.html')
@@ -443,8 +396,13 @@ def addLikes():
 	else: 
 		return render_template('listFriendsText.html')
 
+#Activity
+@app.route('/top5Active', methods = ['GET'])
+def top5Active():
+    cursor = conn.cursor()
+	cursor.execute("SELECT u.username, u.email FROM Users u, Activity a WHERE u.user_id = a.user_id ORDER BY a.activity DESC LIMIT 5")
+	top = cursor.fetchall()
+	return render_template('top5Active.html', rows = top)
 
 if __name__ == "__main__":
-    # this is invoked when in the shell  you run
-    # $ python app.py
     app.run(port=5000, debug=True)

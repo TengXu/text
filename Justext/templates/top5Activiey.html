@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>activity</title>
+</head>
+<body>
+    <h2>Here are the top 5 active Users</h2>
+    <ul>
+    {% for u in rows %}
+	    <li>Username: {{u[0]}}</li>
+        <li>User's email: {{u[1]}}</li>
+    {% endfor %}
+    </ul>
+    <a href='/profie'>Home</a>
+</body>
+</html>

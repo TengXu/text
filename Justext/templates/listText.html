@@ -24,15 +24,15 @@
         </form>
 		</li>
 		<li>
+		{% for name in names %}
+		{{name[0]}}
+		{% endfor %}
+		</li>
+		<li>
 		<form method="post" action="/viewComment">
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" value="View Comments" />
         </form>
-		</li>
-		<li>
-		{% for name in names %}
-		{{name[0]}}
-		{% endfor %}
 		</li>
 		<li>
 		{% for c in comments %}
