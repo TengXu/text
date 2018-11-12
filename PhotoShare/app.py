@@ -195,7 +195,7 @@ def isEmailUnique(email):
 @app.route('/profile')
 @flask_login.login_required
 def protected():
-    return render_template('hello.html', name=flask_login.current_user.id, message="Here's your profile")
+    return render_template('hello.html', name=getUserNameFromEmail(flask_login.current_user.id), message="Here's your profile")
 
 
 # begin photo uploading code
@@ -226,7 +226,7 @@ def upload_file():
         conn.commit()
         cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
         conn.commit()
-        return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!',
+        return render_template('hello.html', name=getUserNameFromEmail(flask_login.current_user.id), message='Photo uploaded!',
                                photos=getUsersPhotos(uid), photopath= photopath)
     # The method is GET so we return a  HTML form to upload the a photo.
     else:
