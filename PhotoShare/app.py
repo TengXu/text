@@ -384,10 +384,10 @@ def viewLikes():
 	if request.method == 'POST': 
 		cursor = conn.cursor() 
 		tid = request.form.get('text_id')
-		names = getUsersLikes(tid) 
+		n = getUsersLikes(tid) 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
 		t = getUsersTexts(uid) 
-		return render_template('listText.html', texts = t, likes = names) 
+		return render_template('listText.html', texts = t, names = n) 
 	else: 
 		return render_template('listText.html')
 
