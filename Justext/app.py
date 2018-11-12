@@ -373,12 +373,12 @@ def addComment():
 		t = getUsersTextsByDate(fid) 
 		cursor.execute("INSERT INTO Comment (user_id, text_id, text) VALUES ('{0}','{1}','{2}')".format(uid, tid, ctext))
 		conn.commit() 
-		cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
-        conn.commit()
+		cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid)) 
+		conn.commit() 
 		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
 	else: 
 		return render_template('listFriendsText.html')
-
+		
 #Likes
 @app.route('/addLikes', methods = ['POST','GET'])
 @flask_login.login_required
