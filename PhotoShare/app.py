@@ -399,15 +399,15 @@ def viewLikes():
 @app.route('/viewComment', methods = ['POST','GET'])
 @flask_login.login_required
 def viewComment():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-		tid = request.form.get('text_id')
-		n = getUsersComments(tid)  
-		t = getTexts(tid)
+	if request.method == 'POST': 
+		cursor = conn.cursor() 
+		tid = request.form.get('text_id') 
+		n = getUsersComments(tid) 
+		t = getTexts(tid) 
 		return render_template('listText.html', texts = t, comments = n) 
 	else: 
 		return render_template('listText.html')
-		
+	
 #Comments
 @app.route('/addComment', methods = ['POST','GET'])
 @flask_login.login_required
