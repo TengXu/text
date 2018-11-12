@@ -6,7 +6,10 @@ CREATE TABLE Users (
   firstname VARCHAR(255),
   lastname VARCHAR(255),
   email varchar(255) UNIQUE,
+  birthday DATE,
   password varchar(255) NOT NULL,
+  hometown VARCHAR(255),
+  gender VARCHAR(6),
 	KEY (user_id),
   CONSTRAINT PRIMARY KEY (user_id)
 );
@@ -19,24 +22,36 @@ CREATE TABLE Friends(
 	CONSTRAINT FOREIGN KEY (friend_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Album(
+	album_id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL,
+	datecreate TIMESTAMP NOT NULL,
+	user_id INT NOT NULL,
+	KEY (album_id),
+	CONSTRAINT PRIMARY KEY (album_id),
+	CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
+
 CREATE TABLE Photo (
   photo_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL ,
+  album_id int,
   photopath VARCHAR(255),
   caption VARCHAR(255),
 	KEY (photo_id),
   CONSTRAINT PRIMARY KEY (photo_id),
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (album_id) REFERENCES Album(album_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Text (
   text_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL ,
-  content TEXT,
+  content VARCHAR(255),
   caption VARCHAR(255),
-  KEY (photo_id),
+	KEY (text_id),
   CONSTRAINT PRIMARY KEY (text_id),
-  CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Comment(
