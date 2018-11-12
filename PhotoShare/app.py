@@ -166,6 +166,11 @@ def getUsersLikes(tid):
     cursor.execute("SELECT u.username FROM Users u, Likes l WHERE l.text_id = '{0}' AND l.user_id = u.user_id".format(tid))
     return cursor.fetchall() 
 
+def getUsersComments(tid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT u.username, c.text FROM Users u, Comment c WHERE c.text_id = '{0}' AND c.user_id = u.user_id".format(tid))
+    return cursor.fetchall() 	
+	
 def getUsersTextsByDate(uid):
     cursor = conn.cursor()
     cursor.execute("SELECT caption, content, post_time, text_id, user_id FROM Text WHERE user_id = '{0}' ORDER BY post_time DESC".format(uid))
@@ -385,21 +390,23 @@ def viewLikes():
 		cursor = conn.cursor() 
 		tid = request.form.get('text_id')
 		n = getUsersLikes(tid) 
-		uid = getUserIdFromEmail(flask_login.current_user.id) 
+		# uid = getUserIdFromEmail(flask_login.current_user.id) 
 		t = getTexts(tid)
 		return render_template('listText.html', texts = t, names = n) 
 	else: 
 		return render_template('listText.html')
 
 @app.route('/viewComment', methods = ['POST','GET'])
+@flask_login.login_required
 def viewComment():
     if request.method == 'POST':
         cursor = conn.cursor()
-        pid = request.form.get('photo_id')
-        cursor.execute("SELECT c.text, u.firstname, u.lastname, u.email FROM Photo p, Comment c, Users u WHERE c.photo_id = '{0}' and c.user_id = u.user_id and c.photo_id = p.photo_id".format(pid))
-        return render_template('viewComment.html', photos = cursor.fetchall())
-    else:
-        return render_template('viewComment.html')
+		tid = request.form.get('text_id')
+		n = getUsersComments(tid)  
+		t = getTexts(tid)
+		return render_template('listText.html', texts = t, comments = n) 
+	else: 
+		return render_template('listText.html')
 		
 #Comments
 @app.route('/addComment', methods = ['POST','GET'])
