@@ -399,9 +399,9 @@ def addLikes():
 #Activity
 @app.route('/top5Active', methods = ['GET'])
 def top5Active():
-    cursor = conn.cursor()
-	cursor.execute("SELECT u.username, u.email FROM Users u, Activity a WHERE u.user_id = a.user_id ORDER BY a.activity DESC LIMIT 5")
-	top = cursor.fetchall()
+	cursor = conn.cursor() 
+	cursor.execute("SELECT u.username, u.email FROM Users u, Activity a WHERE u.user_id = a.user_id ORDER BY a.activity DESC LIMIT 5") 
+	top = cursor.fetchall() 
 	return render_template('top5Active.html', rows = top)
 
 if __name__ == "__main__":
