@@ -22,16 +22,6 @@ CREATE TABLE Friends(
 	CONSTRAINT FOREIGN KEY (friend_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Album(
-	album_id INT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(255) NOT NULL,
-	datecreate TIMESTAMP NOT NULL,
-	user_id INT NOT NULL,
-	KEY (album_id),
-	CONSTRAINT PRIMARY KEY (album_id),
-	CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-);
-
 CREATE TABLE Photo (
   photo_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL ,
@@ -42,6 +32,16 @@ CREATE TABLE Photo (
   CONSTRAINT PRIMARY KEY (photo_id),
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
   CONSTRAINT FOREIGN KEY (album_id) REFERENCES Album(album_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Text (
+  text_id int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL ,
+  content TEXT,
+  caption VARCHAR(255),
+  KEY (photo_id),
+  CONSTRAINT PRIMARY KEY (text_id),
+  CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
 );
 
 CREATE TABLE Comment(

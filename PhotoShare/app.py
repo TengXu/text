@@ -198,7 +198,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
-upload_folder = '/Users/shizhan/CS460/PhotoShare/static/'
+upload_folder = '/Users/Teng/PhotoShare/static'
 app.config['upload_folder'] = upload_folder
 @app.route('/upload', methods=['GET', 'POST'])
 @flask_login.login_required
@@ -223,8 +223,31 @@ def upload_file():
     else:
         return render_template('upload.html')
 
+		def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-# end photo uploading code
+
+@app.route('/upload_text', methods=['GET', 'POST'])
+@flask_login.login_required
+def upload_text():
+    if request.method == 'POST':
+        uid = getUserIdFromEmail(flask_login.current_user.id)
+        imgfile = request.files['photo']
+        filename = imgfile.filename
+        caption = request.form.get('caption')
+        imgfile.save(os.path.join(app.config['upload_folder'], filename))
+        #photo_data = base64.standard_b64encode(imgfile.read())
+        photopath = "static/"+filename
+        cursor = conn.cursor()
+        cursor.execute(
+        "INSERT INTO Text (text, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(text, uid, caption))
+        conn.commit()
+        cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
+        conn.commit()
+        return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
+    # The method is GET so we return a  HTML form to upload the a photo.
+    else:
+        return render_template('upload_text.html')
 
 
 # default page
