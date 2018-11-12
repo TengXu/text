@@ -11,32 +11,30 @@
 
 import flask
 from flask import Flask, Response, request, render_template, redirect, url_for
-# from flaskext.mysql import MySQL
+from flask_mysqldb import MySQL
 # import flask.ext.login as flask_login
 
-# # for image uploading
-# # from werkzeug import secure_filename
-# import os, base64
+import os, base64
 
-# mysql = MySQL()
+mysql = MySQL()
 app = Flask(__name__)
 # app.secret_key = 'super secret string'  # Change this!
 
-# # These will need to be changed according to your creditionals
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'sat2200'
-# app.config['MYSQL_DATABASE_DB'] = 'photoshare'
-# app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
-# mysql.init_app(app)
+# These will need to be changed according to your creditionals
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'sat2200'
+app.config['MYSQL_DATABASE_DB'] = 'photoshare'
+app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
+mysql.init_app(app)
 
-# # begin code used for login
+# begin code used for login
 # login_manager = flask_login.LoginManager()
 # login_manager.init_app(app)
 
-# conn = mysql.connect()
-# cursor = conn.cursor()
-# cursor.execute("SELECT email FROM Users")
-# users = cursor.fetchall()
+conn = mysql.connect()
+cursor = conn.cursor()
+cursor.execute("SELECT email FROM Users")
+users = cursor.fetchall()
 
 
 # def getUserList():
