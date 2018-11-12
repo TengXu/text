@@ -413,7 +413,7 @@ def addComment():
 		tid = request.form.get('text_id') 
 		ctext = request.form.get('comments') 
 		t = getUsersTextsByDate(fid) 
-		cursor.execute("INSERT INTO Comment (user_id, text_id, text) VALUES ('{0}','{1}','{2}')".format(uid, pid, ctext))
+		cursor.execute("INSERT INTO Comment (user_id, text_id, text) VALUES ('{0}','{1}','{2}')".format(uid, tid, ctext))
 		conn.commit() 
 		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
 	else: 
