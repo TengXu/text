@@ -14,6 +14,12 @@
         <li>caption: {{text[0]}}</li>
         <li>content: {{text[1]}}</li>
 		<li>Posted on: {{text[2]}}</li>
+		<li>
+			<form method="post" action="/addLikes">
+				<input type="hidden" value="{{ text[3] }}" name="text_id"></input>
+				<input type="submit" value="Like" />
+			</form>
+		</li>
     {% endfor %}
     </ul>
 

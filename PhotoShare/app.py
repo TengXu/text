@@ -520,19 +520,20 @@ def addLikes():
         cursor = conn.cursor()
         email = flask_login.current_user.id
         uid = getUserIdFromEmail(email)
-        pid = request.form.get('photo_id')
-        cursor.execute("INSERT INTO Likes (user_id, photo_id) VALUES ('{0}','{1}')".format(uid, pid))
+        tid = request.form.get('text_id')
+		t = getUsersTextsByDate(uid)
+        cursor.execute("INSERT INTO Likes (user_id, text_id) VALUES ('{0}','{1}')".format(uid, tid))
         conn.commit()
-        return render_template('addLikes.html', message = 'Success!')
+        return render_template('listFriendsText.html', name=getUserNameFromUid(uid), texts=t)
     else:
-        return  render_template('addLikes.html')
+        return  render_template('listFriendsText.html')
 
 @app.route('/viewLikes', methods = ['POST','GET'])
 def viewLikes():
     if request.method == 'POST':
         cursor = conn.cursor()
-        pid = request.form.get('photo_id')
-        cursor.execute("SELECT u.firstname, u.lastname, u.email FROM Likes l, Users u WHERE l.photo_id = '{0}' and l.user_id = u.user_id".format(pid))
+		uid = getUserIdFromEmail(flask_login.current_user.id)
+        cursor.execute("SELECT SELECT l.user_id FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id".format(uid))
         return render_template('viewLikes.html', rows = cursor.fetchall())
     else:
         return render_template('viewLikes.html')

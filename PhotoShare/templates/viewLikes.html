@@ -5,26 +5,11 @@
     <title>viewLikes</title>
 </head>
 <body>
-    {% if message %}
-        {{message}}
-    {% endif %}
-        <div class="title">
-            <h1>Enter your information below</h1>
-        </div>
-        <div id="content">
-            <form method="POST" action="{{ url_for('viewLikes') }}">
-                <label for="photo_id">Enter the Photo id:</label>
-                <input type="integer" name="photo_id" /><br />
-                <input type="submit" />
-            </form>
-         </div>
-
-    <h2>Here are users that like this picture</h2>
+    <h1>Here are users that like your texts</h1>
     <ul>
-    {% for photo in rows %}
-		<li>First Name: {{photo[0]}}</li>
-		<li>Last Name: {{photo[1]}}</li>
-		<li>user email: {{photo[2]}}</li>
+    {% for text in rows %}
+		<li>User: {{text[0]}} likes your post: {{text[1]}}</li>
+		<li>{{text[2]}}</li>
     {% endfor %}
     </ul>
     <a href='/'>Home</a>
