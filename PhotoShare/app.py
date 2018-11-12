@@ -241,7 +241,7 @@ def allowed_file(filename):
         # cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
         # conn.commit()
         # return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
-    The method is GET so we return a  HTML form to upload the a photo.
+    # The method is GET so we return a  HTML form to upload the a photo.
     # else:
         # return render_template('upload_text.html')
 
