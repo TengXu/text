@@ -379,7 +379,7 @@ def viewPhoto():
 def listText():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
-    t = getUsersTexts(uid)
+    t = getUsersTextsByDate(uid)
     # cursor.execute("SELECT t.caption, t.content, t.post_time, t.text_id FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
 	
@@ -423,56 +423,6 @@ def deleteText():
 		return render_template('listText.html', texts = t) 
 	else: 
 		return render_template('listText.html')
-#Tag
-# @app.route('/addTag', methods = ['POST','GET'])
-# @flask_login.login_required
-# def addTag():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # photo_id = request.form.get('photo_id')
-        # print (photo_id)
-        # tag = request.form.get('tag')
-        # q = "INSERT INTO Tag (tag, photo_id) VALUES ('{0}','{1}')".format(tag, photo_id)
-        # cursor.execute(q)
-        cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name, uid))
-        # conn.commit()
-        # print ('done')
-        # return render_template('addTag.html', message = 'SUCCESS!')
-    # else:
-        # return render_template('addTag.html')
-
-# @app.route('/listTag', methods = ['GET'])
-# @flask_login.login_required
-# def listTag():
-    # cursor = conn.cursor()
-    # print("here")
-    # uid = getUserIdFromEmail(flask_login.current_user.id)
-    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.user_id='{0}' and p.album_id = a.album_id and p.photo_id=t.photo_id and p.user_id = u.user_id".format(uid))
-    # return render_template('listTag.html', photos = cursor.fetchall())
-
-# @app.route('/viewallTag', methods = ['GET'])
-# @flask_login.login_required
-# def viewallTag():
-    # cursor = conn.cursor()
-    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, u.email, u.firstname, u.lastname, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.photo_id = t.photo_id and p.album_id = a.album_id and p.user_id = u.user_id")
-    # return render_template('viewallTag.html', photos=cursor.fetchall())
-
-# @app.route('/viewpopTag', methods = ['GET'])
-# @flask_login.login_required
-# def viewpopTag():
-    # cursor = conn.cursor()
-    # cursor.execute("SELECT t.tag, COUNT(*) FROM Tag t GROUP BY tag ORDER BY COUNT(*) DESC")
-    # return render_template('viewpopTag.html', photos=cursor.fetchall())
-
-# @app.route('/searchTag', methods = ['POST','GET'])
-# def searchTag():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # tag = request.form.get('tag')
-        # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, u.firstname, u.lastname, u.email, t.tag, a.album_id FROM Photo p, Album a, Users u, Tag t WHERE t.tag = '{0}' and t.photo_id = p.photo_id and p.album_id = a.album_id and p.user_id = u.user_id".format(tag))
-        # return render_template('searchTag.html', photos = cursor.fetchall())
-    # else:
-        # return render_template('searchTag.html')
 
 #Comment
 @app.route('/addComment', methods = ['POST','GET'])
@@ -533,7 +483,8 @@ def viewLikes():
 	if request.method == 'POST': 
 		cursor = conn.cursor() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		cursor.execute("SELECT USER.username, A.caption, A.content FROM USER, (SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id) A WHERE USER.user_id = A.user_id".format(uid)) 
+		# cursor.execute("SELECT USER.username, A.caption, A.content FROM USER, (SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id) A WHERE USER.user_id = A.user_id".format(uid)) 
+		cursor.execute("SELECT SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id".format(uid)) 
 		return render_template('viewLikes.html', rows = cursor.fetchall()) 
 	else: 
 		return render_template('viewLikes.html')
