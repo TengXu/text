@@ -17,6 +17,17 @@
             <input type="submit" value="Delete" />
         </form>
 		</li>
+		<li>
+		<form method="post" action="/viewLikes">
+            <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
+            <input type="submit" value="View Likes" />
+        </form>
+		</li>
+		<li>
+		{% for name in names %}
+		{{name[0]}}
+		{% endfor %}
+		</li>
     {% endfor %}
     </ul>
 

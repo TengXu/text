@@ -160,6 +160,11 @@ def getUsersTexts(uid):
     cursor = conn.cursor()
     cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall() 
+	
+def getUsersLikes(tid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT u.username FROM Users u, Likes l WHERE l.text_id = '{0}' AND l.user_id = u.user_id".format(tid))
+    return cursor.fetchall() 
 
 def getUsersTextsByDate(uid):
     cursor = conn.cursor()
@@ -322,57 +327,6 @@ def viewPhoto():
     cursor = conn.cursor()
     cursor.execute("SELECT p.photopath, p.caption, p.photo_id, u.email, u.firstname, u.lastname FROM Photo p, Users u WHERE p.user_id = u.user_id")
     return render_template('viewPhoto.html', photos=cursor.fetchall())
-	
-
-#Album
-# @app.route('/addAlbum', methods = ['POST','GET'])
-# @flask_login.login_required
-# def addAlbum():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # uid = getUserIdFromEmail(flask_login.current_user.id)
-        # name = request.form.get('name')
-        # cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name,uid))
-        # conn.commit()
-        # return render_template('addAlbum.html',message = 'Success!')
-    # else:
-        # return render_template('addAlbum.html')
-
-# @app.route('/listAlbum', methods=['GET'])
-# @flask_login.login_required
-# def listAlbum():
-    # cursor = conn.cursor()
-    # uid = getUserIdFromEmail(flask_login.current_user.id)
-    # cursor.execute("SELECT a.name, a.album_id FROM Album a, Users u WHERE u.user_id = '{0}' and a.user_id = u.user_id".format(uid))
-    # return render_template('listAlbum.html', row = cursor.fetchall())
-
-# @app.route('/deleteAlbum', methods = ['POST','GET'])
-# @flask_login.login_required
-# def deleteAlbum():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # aid = request.form.get('album_id')
-        # uid = getUserIdFromEmail(flask_login.current_user.id)
-        # name = request.form.get('name')
-        # cursor.execute("DELETE FROM Album WHERE album_id = '{0}' and name = '{1}' and user_id = '{2}'".format(aid,name,uid))
-        # conn.commit()
-        # return render_template('deleteAlbum.html', message = 'SUCCESS!')
-    # else:
-        # return render_template('deleteAlbum.html')
-
-#Photo
-# @app.route('/addPhoto', methods = ['POST','GET'])
-# @flask_login.login_required
-# def addPhoto():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # pid = request.form.get('photo_id')
-        # aid = request.form.get('album_id')
-        # cursor.execute("UPDATE Photo p SET p.album_id = '{0}' WHERE p.photo_id = '{1}'".format(aid,pid))
-        # conn.commit()
-        # return render_template('addPhoto.html',message = 'Success!')
-    # else:
-        # return render_template('addPhoto.html')
 
 @app.route('/listText', methods=['GET'])
 @flask_login.login_required
@@ -423,6 +377,18 @@ def deleteText():
 		return render_template('listText.html', texts = t) 
 	else: 
 		return render_template('listText.html')
+
+@app.route('/viewLikes', methods = ['POST','GET'])
+@flask_login.login_required
+def viewLikes():
+	if request.method == 'POST': 
+		cursor = conn.cursor() 
+		tid = request.form.get('text_id')
+		names = getUsersLikes(tid) 
+		return render_template('listText.html', texts = t, likes = names) 
+	else: 
+		return render_template('listText.html')
+
 
 #Comment
 @app.route('/addComment', methods = ['POST','GET'])
@@ -478,18 +444,6 @@ def addLikes():
 		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
 	else: 
 		return render_template('listFriendsText.html')
-
-@app.route('/viewLikes', methods = ['POST','GET'])
-def viewLikes():
-	if request.method == 'POST': 
-		cursor = conn.cursor() 
-		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		# cursor.execute("SELECT USER.username, A.caption, A.content FROM USER, (SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id) A WHERE USER.user_id = A.user_id".format(uid)) 
-		# cursor.execute("SELECT COUNT(l.user_id) FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id".format(uid)) 
-		t = getUsersTexts(uid)
-		return render_template('viewLikes.html', rows = t) 
-	else: 
-		return render_template('viewLikes.html')
 
 
 if __name__ == "__main__":
