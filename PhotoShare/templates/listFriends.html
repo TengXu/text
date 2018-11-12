@@ -8,8 +8,14 @@
     <h2>Here are your Friends</h2>
     <ul>
     {% for friend in row %}
-		<li>Username: {{friend[0]}}</li>
-        <li>Latest Post: {{friend[1]}}</li>
+		<li>
+			{{ friend[0] }}
+			<form method="post" action="/listFriendsText">
+            <input type="hidden" value="{{ friend[1] }}" name="user_id"></input>
+            <input type="submit" value="Visit" />
+        </form>
+		</li>
+        <!-- <li>Latest Post: {{friend[1]}}</li> -->
     {% endfor %}
     </ul>
     <a href='/profile'>Home</a>

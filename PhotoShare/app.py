@@ -161,6 +161,10 @@ def getUsersTexts(uid):
     cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall() 
 
+def getUsersTextsByDate(uid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}' ORDER BY post_time".format(uid))
+    return cursor.fetchall() 
 
 def getUserIdFromEmail(email):
     cursor = conn.cursor()
@@ -170,6 +174,11 @@ def getUserIdFromEmail(email):
 def getUserNameFromEmail(email):
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM Users WHERE email = '{0}'".format(email))
+    return cursor.fetchone()[0]
+	
+def getUserNameFromUid(uid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM Users WHERE user_id = '{0}'".format(uid))
     return cursor.fetchone()[0]
 
 
@@ -283,8 +292,21 @@ def addFriends():
 def listFriends():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT u.username FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
+    cursor.execute("SELECT u.username, u.user_id FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
     return render_template('listFriends.html',row=cursor.fetchall())
+	
+@app.route('/listFriendsText', methods = ['POST','GET'])
+@flask_login.login_required	
+def listFriendsText():
+	if request.method == 'POST': 
+		cursor = conn.cursor() 
+		uid = request.form.get('user_id') 
+		conn.commit() 
+		t = getUsersTextsByDate(uid) 
+		return render_template('listFriendsText.html', name=getUserNameFromUid(uid), texts=t) 
+	else: 
+		return render_template('listFriendsText.html')
+	
 
 #Activity
 @app.route('/top10Activity', methods = ['GET'])
@@ -394,7 +416,6 @@ def deleteText():
 	if request.method == 'POST': 
 		cursor = conn.cursor() 
 		tid = request.form.get('text_id')
-		print (tid+'  vvsdfsadffffffffffffffffffffffffffff')
 		cursor.execute("DELETE FROM Text WHERE text_id = '{0}'".format(tid)) 
 		conn.commit() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
@@ -515,61 +536,6 @@ def viewLikes():
         return render_template('viewLikes.html', rows = cursor.fetchall())
     else:
         return render_template('viewLikes.html')
-
-## Recommend
-# @app.route('/recommendFriends', methods = ['GET'])
-# @flask_login.login_required
-# def recommendFriends():
-    # cursor = conn.cursor()
-    # email = flask_login.current_user.id
-    # uid = getUserIdFromEmail(email)
-    # q = "SELECT f.user_id FROM Friends f WHERE f.friend_id = (SELECT f1.friend_id FROM Friends f1 WHERE f1.user_id = '{0}') GROUP BY f.user_id HAVING COUNT(f.friend_id)>1".format(uid)
-    # cursor.execute(q)
-    # friendlist = cursor.fetchall()
-    # return render_template('recommendFriend.html', rows = friendlist)
-
-
-# def popTag():
-    # cursor = conn.cursor()
-    # uid = getUserIdFromEmail(flask_login.current_user.id)
-    # cursor.execute("SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' GROUP BY (t.tag) HAVING COUNT (*)>0 ORDER BY COUNT(*) DESC LIMIT 5".format(uid))
-    # q = "SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' Group BY (t.tag) ORDER BY COUNT(p.user_id) DESC LIMIT 5".format(
-        # uid)
-    # cursor.execute(q)
-    # poptag = cursor.fetchall()
-    # poptag = [str(item[0]) for item in poptag]
-    # return poptag
-
-# @app.route('/recommendPhoto', methods = ['GET'])
-# @flask_login.login_required
-# def recommendPhoto():
-    # cursor = conn.cursor()
-    # poptag = popTag()
-    # uid = getUserIdFromEmail(flask_login.current_user.id)
-    # cursor.execute("SELECT photo_id FROM Photo")
-    # photos = cursor.fetchall()
-    # pid = [int(item[0]) for item in photos]
-    # rate = [0] * len(pid)
-    # recommend = []
-    # for i in range(len(pid)):
-        # for t in poptag:
-            # cursor.execute("SELECT COUNT(*) FROM Tag Where photo_id = '{0}' and tag = '{1}'.format(pid[i], t)")
-            # count = cursor.fetchone()
-            # count = int(count[0])
-            # if count > 0:
-                # rate[i] = rate[i] + 1
-    # photorate = [(pid[j], rate[j]) for j in range(len(pid))]
-    # photorate = sorted(photorate, key=lambda x: (-x[1], x[0]))
-    # photorate = photorate[:5]
-    # for i in range(len(photorate)):
-        # cursor.execute("SELECT photopath FROM Photo WHERE photo_id = '{0}'".format(photorate[i][0]))
-        # Rate = cursor.fetchall()
-        # count = [item[0] for item in Rate]
-        # recommend.append(count)
-    # return render_template('recommendPhoto.html', photos = recommend)
-
-
-
 
 
 if __name__ == "__main__":

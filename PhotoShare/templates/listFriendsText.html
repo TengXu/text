@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends Texts</title>
+</head>
+<body>
+{% if name %}
+  <h1 style="color:pink;">{{ name }}'s Texts</h1>
+{% endif %}
+<p>Here are the texts</p>
+    <ul>
+    {% for text in texts %}
+        <li>caption: {{text[0]}}</li>
+        <li>content: {{text[1]}}</li>
+		<li>Posted on: {{text[2]}}</li>
+    {% endfor %}
+    </ul>
+
+<a href='/profile'>Home</a>
+</body>
+</html>
