@@ -398,17 +398,16 @@ def deletePhoto():
 @app.route('/deleteText', methods = ['POST','GET'])
 @flask_login.login_required
 def deleteText():
-    if request.method == 'POST':
+	if request.method == 'POST': 
 		cursor = conn.cursor() 
 		tid = request.form.get('text_id') 
 		cursor.execute("DELETE FROM Text WHERE text_id = '{0}'".format(tid)) 
 		conn.commit() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		t = getUsersTexts(uid)
-		return render_template('listText.html', texts = t)
-	else:
-	    return render_template('listText.html')
-
+		t = getUsersTexts(uid) 
+		return render_template('listText.html', texts = t) 
+	else: 
+		return render_template('listText.html')
 #Tag
 # @app.route('/addTag', methods = ['POST','GET'])
 # @flask_login.login_required
