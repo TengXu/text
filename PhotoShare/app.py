@@ -163,7 +163,7 @@ def getUsersTexts(uid):
 
 def getUsersTextsByDate(uid):
     cursor = conn.cursor()
-    cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}' ORDER BY post_time DESC".format(uid))
+    cursor.execute("SELECT caption, content, post_time, text_id, user_id FROM Text WHERE user_id = '{0}' ORDER BY post_time DESC".format(uid))
     return cursor.fetchall() 
 
 def getUserIdFromEmail(email):
@@ -470,11 +470,12 @@ def addLikes():
 		cursor = conn.cursor() 
 		email = flask_login.current_user.id 
 		uid = getUserIdFromEmail(email) 
+		fid = request.form.get('friend_id')
 		tid = request.form.get('text_id') 
-		t = getUsersTextsByDate(uid) 
+		t = getUsersTextsByDate(fid) 
 		cursor.execute("INSERT INTO Likes (user_id, text_id) VALUES ('{0}','{1}')".format(uid, tid)) 
 		conn.commit() 
-		return render_template('listFriendsText.html', name=getUserNameFromUid(uid), texts=t) 
+		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
 	else: 
 		return render_template('listFriendsText.html')
 
