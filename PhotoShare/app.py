@@ -112,7 +112,7 @@ def logout():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return render_template('unauth.html')
+    return render_template('login.html')
 
 
 # you can specify specific methods (GET/POST) in function header instead of inside the functions as seen earlier
