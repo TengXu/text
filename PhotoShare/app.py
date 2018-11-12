@@ -232,15 +232,11 @@ def allowed_file(filename):
 def upload_text():
     if request.method == 'POST':
         uid = getUserIdFromEmail(flask_login.current_user.id)
-        imgfile = request.files['photo']
-        filename = imgfile.filename
+		content = request.form.get('content')
         caption = request.form.get('caption')
-        imgfile.save(os.path.join(app.config['upload_folder'], filename))
-        #photo_data = base64.standard_b64encode(imgfile.read())
-        photopath = "static/"+filename
         cursor = conn.cursor()
         cursor.execute(
-        "INSERT INTO Text (text, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(text, uid, caption))
+        "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption))
         conn.commit()
         cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
         conn.commit()
