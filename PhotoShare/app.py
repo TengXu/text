@@ -373,7 +373,7 @@ def deleteText():
 		cursor.execute("DELETE FROM Text WHERE text_id = '{0}'".format(tid)) 
 		conn.commit() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		t = getUsersTexts(uid) 
+		t = getUsersTextsByDate(uid) 
 		return render_template('listText.html', texts = t) 
 	else: 
 		return render_template('listText.html')
@@ -391,25 +391,6 @@ def viewLikes():
 	else: 
 		return render_template('listText.html')
 
-
-#Comment
-@app.route('/addComment', methods = ['POST','GET'])
-@flask_login.login_required
-def addComment():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        email = flask_login.current_user.id
-        uid = getUserIdFromEmail(email)
-        pid = request.form.get('photo_id')
-        ctext = request.form.get('text')
-        cursor.execute("UPDATE Activity SET activity = activity + 1")
-        conn.commit()
-        cursor.execute("INSERT INTO Comment (user_id, photo_id, text) VALUES ('{0}','{1}','{2}')".format(uid, pid, ctext))
-        conn.commit()
-        return render_template('addComment.html', message = 'Success!')
-    else:
-        return  render_template('addComment.html')
-
 @app.route('/viewComment', methods = ['POST','GET'])
 def viewComment():
     if request.method == 'POST':
@@ -419,16 +400,24 @@ def viewComment():
         return render_template('viewComment.html', photos = cursor.fetchall())
     else:
         return render_template('viewComment.html')
-
-@app.route('/searchComment', methods = ['POST','GET'])
-def searchComment():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        comment = request.form.get('comment')
-        cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, u.firstname, u.lastname, u.email, a.album_id FROM Photo p, Album a, Users u, Comment c WHERE c.text = '{0}' and c.photo_id = p.photo_id and p.album_id = a.album_id and p.user_id = u.user_id".format(comment))
-        return render_template('searchComment.html', photos = cursor.fetchall())
-    else:
-        return render_template('searchComment.html')
+		
+#Comments
+@app.route('/addComment', methods = ['POST','GET'])
+@flask_login.login_required
+def addComment():
+	if request.method == 'POST': 
+		cursor = conn.cursor() 
+		email = flask_login.current_user.id 
+		uid = getUserIdFromEmail(email) 
+		fid = request.form.get('friend_id')
+		tid = request.form.get('text_id') 
+		ctext = request.form.get('comments') 
+		t = getUsersTextsByDate(fid) 
+		cursor.execute("INSERT INTO Comment (user_id, text_id, text) VALUES ('{0}','{1}','{2}')".format(uid, pid, ctext))
+		conn.commit() 
+		return render_template('listFriendsText.html', name=getUserNameFromUid(fid), texts=t) 
+	else: 
+		return render_template('listFriendsText.html')
 
 #Likes
 @app.route('/addLikes', methods = ['POST','GET'])

@@ -21,6 +21,14 @@
 				<input type="submit" value="Like" />
 			</form>
 		</li>
+		<li>
+			<form method="post" action="/addComments">
+				<input type="input" name="comments"></input>
+				<input type="hidden" value="{{ text[3] }}" name="text_id"></input>
+				<input type="hidden" value="{{ text[4] }}" name="friend_id"></input>
+				<input type="submit" value="Comment" />
+			</form>
+		</li>
     {% endfor %}
     </ul>
 
