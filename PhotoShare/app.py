@@ -400,7 +400,8 @@ def deletePhoto():
 def deleteText():
 	if request.method == 'POST': 
 		cursor = conn.cursor() 
-		tid = request.form.get('text_id') 
+		tid = request.form.get('text_id')
+		print (tid+'  vvsdfsadffffffffffffffffffffffffffff')
 		cursor.execute("DELETE FROM Text WHERE text_id = '{0}'".format(tid)) 
 		conn.commit() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 

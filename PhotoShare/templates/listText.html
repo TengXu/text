@@ -13,7 +13,6 @@
 		<li>Posted on: <time datetime="{{text[2]}}"></li>
 		<li>        
 		<form method="post" action="/deleteText">
-            <label for="integer">Enter the picture id that you want to delete:</label>
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" value="Delete" />
         </form>
