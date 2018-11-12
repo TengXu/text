@@ -533,7 +533,7 @@ def viewLikes():
 	if request.method == 'POST': 
 		cursor = conn.cursor() 
 		uid = getUserIdFromEmail(flask_login.current_user.id) 
-		cursor.execute("SELECT USER.username, A.user_id, A.caption, A.content FROM USER, (SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id) A WHERE USER.user_id = A.user_id".format(uid)) 
+		cursor.execute("SELECT USER.username, A.caption, A.content FROM USER, (SELECT l.user_id, t.caption, t.content FROM Likes l, Users u, Text t WHERE u.user_id = '{0}' AND t.user_id = u.user_id AND t.text_id = l.text_id) A WHERE USER.user_id = A.user_id".format(uid)) 
 		return render_template('viewLikes.html', rows = cursor.fetchall()) 
 	else: 
 		return render_template('viewLikes.html')
