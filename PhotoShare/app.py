@@ -19,7 +19,7 @@ from flask import Flask, Response, request, render_template, redirect, url_for
 # import os, base64
 
 # mysql = MySQL()
-# app = Flask(__name__)
+app = Flask(__name__)
 # app.secret_key = 'super secret string'  # Change this!
 
 # # These will need to be changed according to your creditionals
@@ -229,10 +229,10 @@ from flask import Flask, Response, request, render_template, redirect, url_for
 # # end photo uploading code
 
 
-# # default page
-# @app.route("/", methods=['GET'])
-# def hello():
-    # return render_template('hello.html', message='Welecome to Photoshare')
+# default page
+@app.route("/", methods=['GET'])
+def hello():
+    return render_template('hello.html', message='Welecome to Photoshare')
 
 # #Friends
 # @app.route('/searchUsers', methods= ['POST','GET'])
