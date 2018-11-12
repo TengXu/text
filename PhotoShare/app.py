@@ -132,11 +132,11 @@ def register_user():
     try:
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
-        birthday = request.form.get('birthday')
+        # birthday = request.form.get('birthday')
         email = request.form.get('email')
         password = request.form.get('password')
-        hometown = request.form.get('hometown')
-        gender = request.form.get('gender')
+        # hometown = request.form.get('hometown')
+        # gender = request.form.get('gender')
     except:
         print(
             "couldn't find all tokens")  # this prints to shell, end users will not see this (all print statements go to shell)
