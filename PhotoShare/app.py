@@ -227,23 +227,23 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
-@app.route('/upload_text', methods=['GET', 'POST'])
-@flask_login.login_required
-def upload_text():
-    if request.method == 'POST':
-        uid = getUserIdFromEmail(flask_login.current_user.id)
-		content = request.form.get('content')
-		caption = request.form.get('caption')
-        cursor = conn.cursor()
-        cursor.execute(
-        "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption))
-        conn.commit()
-        cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
-        conn.commit()
-        return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
-    # The method is GET so we return a  HTML form to upload the a photo.
-    else:
-        return render_template('upload_text.html')
+# @app.route('/upload_text', methods=['GET', 'POST'])
+# @flask_login.login_required
+# def upload_text():
+    # if request.method == 'POST':
+        # uid = getUserIdFromEmail(flask_login.current_user.id)
+		# content = request.form.get('content')
+		# caption = request.form.get('caption')
+        # cursor = conn.cursor()
+        # cursor.execute(
+        # "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption))
+        # conn.commit()
+        # cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid))
+        # conn.commit()
+        # return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
+    The method is GET so we return a  HTML form to upload the a photo.
+    # else:
+        # return render_template('upload_text.html')
 
 
 # default page
