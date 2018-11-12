@@ -13,6 +13,7 @@ import flask
 from flask import Flask, Response, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
 import flask_login
+import datetime
 
 import os, base64
 
@@ -130,13 +131,11 @@ def register():
 @app.route("/register", methods=['POST'])
 def register_user():
     try:
+		username = request.form.get('username')
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
-        # birthday = request.form.get('birthday')
         email = request.form.get('email')
         password = request.form.get('password')
-        # hometown = request.form.get('hometown')
-        # gender = request.form.get('gender')
     except:
         print(
             "couldn't find all tokens")  # this prints to shell, end users will not see this (all print statements go to shell)
@@ -144,7 +143,7 @@ def register_user():
     cursor = conn.cursor()
     test = isEmailUnique(email)
     if test:
-        print(cursor.execute("INSERT INTO Users (firstname, lastname, email, password) VALUES ('{0}', '{1}', '{2}', '{3}')".format(firstname, lastname, email, password)))
+        print(cursor.execute("INSERT INTO Users (username, firstname, lastname, email, password) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(username, firstname, lastname, email, password)))
         conn.commit()
         # log user in
         user = User()
@@ -153,7 +152,7 @@ def register_user():
         uid = getUserIdFromEmail(email)
         cursor.execute("INSERT INTO Activity (activity, user_id) VALUES ('{0}', '{1}')".format(0, uid))
         conn.commit()
-        return render_template('hello.html', name=email, message='Account Created!')
+        return render_template('hello.html', name=getUserNameFromEmail(email), message='Account Created!')
     else:
         print("couldn't find all tokens")
         return flask.redirect(flask.url_for('register'))
@@ -173,6 +172,11 @@ def getUsersTexts(uid):
 def getUserIdFromEmail(email):
     cursor = conn.cursor()
     cursor.execute("SELECT user_id  FROM Users WHERE email = '{0}'".format(email))
+    return cursor.fetchone()[0]
+	
+def getUserNameFromEmail(email):
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM Users WHERE email = '{0}'".format(email))
     return cursor.fetchone()[0]
 
 
@@ -239,12 +243,13 @@ def upload_text():
 		uid = getUserIdFromEmail(flask_login.current_user.id)
 		content = request.form.get('content') 
 		caption = request.form.get('caption') 
+		time = datetime.datetime.now();
 		cursor = conn.cursor() 
-		cursor.execute( "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption)) 
+		cursor.execute( "INSERT INTO Text (content, user_id, caption, time) VALUES ('{0}', '{1}', '{2}', '{3}' )".format(content, uid, caption, post_time)) 
 		conn.commit() 
 		cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid)) 
 		conn.commit() 
-		return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
+		return render_template('hello.html', name=getUserNameFromEmail(flask_login.current_user.id), message='Text uploaded!')
     else:
         return render_template('upload_text.html')
 

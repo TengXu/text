@@ -3,6 +3,7 @@ USE photoshare;
 
 CREATE TABLE Users (
   user_id int NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255),
   firstname VARCHAR(255),
   lastname VARCHAR(255),
   email varchar(255) UNIQUE,
@@ -49,6 +50,7 @@ CREATE TABLE Text (
   user_id int NOT NULL ,
   content VARCHAR(255),
   caption VARCHAR(255),
+  post_time DATETIME,
 	KEY (text_id),
   CONSTRAINT PRIMARY KEY (text_id),
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
@@ -88,5 +90,5 @@ CREATE TABLE Activity(
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
-INSERT INTO Users (email, password) VALUES ('test@bu.edu', 'test');
-INSERT INTO Users (email, password) VALUES ('test1@bu.edu', 'test');
+INSERT INTO Users (username, email, password) VALUES ('test', 'test@gatech.edu', 'test');
+INSERT INTO Users (username, email, password) VALUES ('test1', 'test1@gatech.edu', 'test');
