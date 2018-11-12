@@ -25,13 +25,11 @@ CREATE TABLE Friends(
 CREATE TABLE Photo (
   photo_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL ,
-  album_id int,
   photopath VARCHAR(255),
   caption VARCHAR(255),
 	KEY (photo_id),
   CONSTRAINT PRIMARY KEY (photo_id),
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (album_id) REFERENCES Album(album_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Text (
