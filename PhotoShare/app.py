@@ -236,7 +236,8 @@ def upload_text():
 		caption = request.form.get('caption') 
 		cursor = conn.cursor() 
 		cursor.execute( "INSERT INTO Text (content, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(content, uid, caption)) 
-		conn.commit() cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid)) 
+		conn.commit() 
+		cursor.execute("UPDATE Activity SET activity = activity + 1 WHERE user_id = '{0}'".format(uid)) 
 		conn.commit() 
 		return render_template('hello.html', name=flask_login.current_user.id, message='Text uploaded!')
     else:
