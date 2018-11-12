@@ -163,7 +163,7 @@ def getUsersTexts(uid):
 
 def getUsersTextsByDate(uid):
     cursor = conn.cursor()
-    cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}' ORDER BY post_time".format(uid))
+    cursor.execute("SELECT caption, content, post_time, text_id FROM Text WHERE user_id = '{0}' ORDER BY post_time DESC".format(uid))
     return cursor.fetchall() 
 
 def getUserIdFromEmail(email):
