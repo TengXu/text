@@ -6,10 +6,7 @@ CREATE TABLE Users (
   firstname VARCHAR(255),
   lastname VARCHAR(255),
   email varchar(255) UNIQUE,
-  birthday DATE,
   password varchar(255) NOT NULL,
-  hometown VARCHAR(255),
-  gender VARCHAR(6),
 	KEY (user_id),
   CONSTRAINT PRIMARY KEY (user_id)
 );
