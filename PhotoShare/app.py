@@ -282,54 +282,54 @@ def viewPhoto():
     return render_template('viewPhoto.html', photos=cursor.fetchall())
 
 #Album
-@app.route('/addAlbum', methods = ['POST','GET'])
-@flask_login.login_required
-def addAlbum():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        uid = getUserIdFromEmail(flask_login.current_user.id)
-        name = request.form.get('name')
-        cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name,uid))
-        conn.commit()
-        return render_template('addAlbum.html',message = 'Success!')
-    else:
-        return render_template('addAlbum.html')
+# @app.route('/addAlbum', methods = ['POST','GET'])
+# @flask_login.login_required
+# def addAlbum():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # uid = getUserIdFromEmail(flask_login.current_user.id)
+        # name = request.form.get('name')
+        # cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name,uid))
+        # conn.commit()
+        # return render_template('addAlbum.html',message = 'Success!')
+    # else:
+        # return render_template('addAlbum.html')
 
-@app.route('/listAlbum', methods=['GET'])
-@flask_login.login_required
-def listAlbum():
-    cursor = conn.cursor()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT a.name, a.album_id FROM Album a, Users u WHERE u.user_id = '{0}' and a.user_id = u.user_id".format(uid))
-    return render_template('listAlbum.html', row = cursor.fetchall())
+# @app.route('/listAlbum', methods=['GET'])
+# @flask_login.login_required
+# def listAlbum():
+    # cursor = conn.cursor()
+    # uid = getUserIdFromEmail(flask_login.current_user.id)
+    # cursor.execute("SELECT a.name, a.album_id FROM Album a, Users u WHERE u.user_id = '{0}' and a.user_id = u.user_id".format(uid))
+    # return render_template('listAlbum.html', row = cursor.fetchall())
 
-@app.route('/deleteAlbum', methods = ['POST','GET'])
-@flask_login.login_required
-def deleteAlbum():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        aid = request.form.get('album_id')
-        uid = getUserIdFromEmail(flask_login.current_user.id)
-        name = request.form.get('name')
-        cursor.execute("DELETE FROM Album WHERE album_id = '{0}' and name = '{1}' and user_id = '{2}'".format(aid,name,uid))
-        conn.commit()
-        return render_template('deleteAlbum.html', message = 'SUCCESS!')
-    else:
-        return render_template('deleteAlbum.html')
+# @app.route('/deleteAlbum', methods = ['POST','GET'])
+# @flask_login.login_required
+# def deleteAlbum():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # aid = request.form.get('album_id')
+        # uid = getUserIdFromEmail(flask_login.current_user.id)
+        # name = request.form.get('name')
+        # cursor.execute("DELETE FROM Album WHERE album_id = '{0}' and name = '{1}' and user_id = '{2}'".format(aid,name,uid))
+        # conn.commit()
+        # return render_template('deleteAlbum.html', message = 'SUCCESS!')
+    # else:
+        # return render_template('deleteAlbum.html')
 
 #Photo
-@app.route('/addPhoto', methods = ['POST','GET'])
-@flask_login.login_required
-def addPhoto():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        pid = request.form.get('photo_id')
-        aid = request.form.get('album_id')
-        cursor.execute("UPDATE Photo p SET p.album_id = '{0}' WHERE p.photo_id = '{1}'".format(aid,pid))
-        conn.commit()
-        return render_template('addPhoto.html',message = 'Success!')
-    else:
-        return render_template('addPhoto.html')
+# @app.route('/addPhoto', methods = ['POST','GET'])
+# @flask_login.login_required
+# def addPhoto():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # pid = request.form.get('photo_id')
+        # aid = request.form.get('album_id')
+        # cursor.execute("UPDATE Photo p SET p.album_id = '{0}' WHERE p.photo_id = '{1}'".format(aid,pid))
+        # conn.commit()
+        # return render_template('addPhoto.html',message = 'Success!')
+    # else:
+        # return render_template('addPhoto.html')
 
 @app.route('/listPhoto', methods=['GET'])
 @flask_login.login_required
@@ -359,55 +359,55 @@ def deletePhoto():
         return render_template('deletePhoto.html')
 
 #Tag
-@app.route('/addTag', methods = ['POST','GET'])
-@flask_login.login_required
-def addTag():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        photo_id = request.form.get('photo_id')
-        print (photo_id)
-        tag = request.form.get('tag')
-        q = "INSERT INTO Tag (tag, photo_id) VALUES ('{0}','{1}')".format(tag, photo_id)
-        cursor.execute(q)
-        #cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name, uid))
-        conn.commit()
-        print ('done')
-        return render_template('addTag.html', message = 'SUCCESS!')
-    else:
-        return render_template('addTag.html')
+# @app.route('/addTag', methods = ['POST','GET'])
+# @flask_login.login_required
+# def addTag():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # photo_id = request.form.get('photo_id')
+        # print (photo_id)
+        # tag = request.form.get('tag')
+        # q = "INSERT INTO Tag (tag, photo_id) VALUES ('{0}','{1}')".format(tag, photo_id)
+        # cursor.execute(q)
+        cursor.execute("INSERT INTO Album (name, user_id) VALUES ('{0}','{1}')".format(name, uid))
+        # conn.commit()
+        # print ('done')
+        # return render_template('addTag.html', message = 'SUCCESS!')
+    # else:
+        # return render_template('addTag.html')
 
-@app.route('/listTag', methods = ['GET'])
-@flask_login.login_required
-def listTag():
-    cursor = conn.cursor()
-    print("here")
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.user_id='{0}' and p.album_id = a.album_id and p.photo_id=t.photo_id and p.user_id = u.user_id".format(uid))
-    return render_template('listTag.html', photos = cursor.fetchall())
+# @app.route('/listTag', methods = ['GET'])
+# @flask_login.login_required
+# def listTag():
+    # cursor = conn.cursor()
+    # print("here")
+    # uid = getUserIdFromEmail(flask_login.current_user.id)
+    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.user_id='{0}' and p.album_id = a.album_id and p.photo_id=t.photo_id and p.user_id = u.user_id".format(uid))
+    # return render_template('listTag.html', photos = cursor.fetchall())
 
-@app.route('/viewallTag', methods = ['GET'])
-@flask_login.login_required
-def viewallTag():
-    cursor = conn.cursor()
-    cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, u.email, u.firstname, u.lastname, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.photo_id = t.photo_id and p.album_id = a.album_id and p.user_id = u.user_id")
-    return render_template('viewallTag.html', photos=cursor.fetchall())
+# @app.route('/viewallTag', methods = ['GET'])
+# @flask_login.login_required
+# def viewallTag():
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, a.album_id, u.email, u.firstname, u.lastname, t.tag FROM Photo p, Album a, Users u, Tag t WHERE p.photo_id = t.photo_id and p.album_id = a.album_id and p.user_id = u.user_id")
+    # return render_template('viewallTag.html', photos=cursor.fetchall())
 
-@app.route('/viewpopTag', methods = ['GET'])
-@flask_login.login_required
-def viewpopTag():
-    cursor = conn.cursor()
-    cursor.execute("SELECT t.tag, COUNT(*) FROM Tag t GROUP BY tag ORDER BY COUNT(*) DESC")
-    return render_template('viewpopTag.html', photos=cursor.fetchall())
+# @app.route('/viewpopTag', methods = ['GET'])
+# @flask_login.login_required
+# def viewpopTag():
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT t.tag, COUNT(*) FROM Tag t GROUP BY tag ORDER BY COUNT(*) DESC")
+    # return render_template('viewpopTag.html', photos=cursor.fetchall())
 
-@app.route('/searchTag', methods = ['POST','GET'])
-def searchTag():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        tag = request.form.get('tag')
-        cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, u.firstname, u.lastname, u.email, t.tag, a.album_id FROM Photo p, Album a, Users u, Tag t WHERE t.tag = '{0}' and t.photo_id = p.photo_id and p.album_id = a.album_id and p.user_id = u.user_id".format(tag))
-        return render_template('searchTag.html', photos = cursor.fetchall())
-    else:
-        return render_template('searchTag.html')
+# @app.route('/searchTag', methods = ['POST','GET'])
+# def searchTag():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # tag = request.form.get('tag')
+        # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name, u.firstname, u.lastname, u.email, t.tag, a.album_id FROM Photo p, Album a, Users u, Tag t WHERE t.tag = '{0}' and t.photo_id = p.photo_id and p.album_id = a.album_id and p.user_id = u.user_id".format(tag))
+        # return render_template('searchTag.html', photos = cursor.fetchall())
+    # else:
+        # return render_template('searchTag.html')
 
 #Comment
 @app.route('/addComment', methods = ['POST','GET'])
@@ -472,57 +472,57 @@ def viewLikes():
     else:
         return render_template('viewLikes.html')
 
-#Recommend
-@app.route('/recommendFriends', methods = ['GET'])
-@flask_login.login_required
-def recommendFriends():
-    cursor = conn.cursor()
-    email = flask_login.current_user.id
-    uid = getUserIdFromEmail(email)
-    q = "SELECT f.user_id FROM Friends f WHERE f.friend_id = (SELECT f1.friend_id FROM Friends f1 WHERE f1.user_id = '{0}') GROUP BY f.user_id HAVING COUNT(f.friend_id)>1".format(uid)
-    cursor.execute(q)
-    friendlist = cursor.fetchall()
-    return render_template('recommendFriend.html', rows = friendlist)
+## Recommend
+# @app.route('/recommendFriends', methods = ['GET'])
+# @flask_login.login_required
+# def recommendFriends():
+    # cursor = conn.cursor()
+    # email = flask_login.current_user.id
+    # uid = getUserIdFromEmail(email)
+    # q = "SELECT f.user_id FROM Friends f WHERE f.friend_id = (SELECT f1.friend_id FROM Friends f1 WHERE f1.user_id = '{0}') GROUP BY f.user_id HAVING COUNT(f.friend_id)>1".format(uid)
+    # cursor.execute(q)
+    # friendlist = cursor.fetchall()
+    # return render_template('recommendFriend.html', rows = friendlist)
 
 
-def popTag():
-    cursor = conn.cursor()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    #cursor.execute("SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' GROUP BY (t.tag) HAVING COUNT (*)>0 ORDER BY COUNT(*) DESC LIMIT 5".format(uid))
-    q = "SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' Group BY (t.tag) ORDER BY COUNT(p.user_id) DESC LIMIT 5".format(
-        uid)
-    cursor.execute(q)
-    poptag = cursor.fetchall()
-    poptag = [str(item[0]) for item in poptag]
-    return poptag
+# def popTag():
+    # cursor = conn.cursor()
+    # uid = getUserIdFromEmail(flask_login.current_user.id)
+    # cursor.execute("SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' GROUP BY (t.tag) HAVING COUNT (*)>0 ORDER BY COUNT(*) DESC LIMIT 5".format(uid))
+    # q = "SELECT t.tag FROM Tag t, Photo p WHERE t.photo_id = p.photo_id and p.user_id = '{0}' Group BY (t.tag) ORDER BY COUNT(p.user_id) DESC LIMIT 5".format(
+        # uid)
+    # cursor.execute(q)
+    # poptag = cursor.fetchall()
+    # poptag = [str(item[0]) for item in poptag]
+    # return poptag
 
-@app.route('/recommendPhoto', methods = ['GET'])
-@flask_login.login_required
-def recommendPhoto():
-    cursor = conn.cursor()
-    poptag = popTag()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT photo_id FROM Photo")
-    photos = cursor.fetchall()
-    pid = [int(item[0]) for item in photos]
-    rate = [0] * len(pid)
-    recommend = []
-    for i in range(len(pid)):
-        for t in poptag:
-            cursor.execute("SELECT COUNT(*) FROM Tag Where photo_id = '{0}' and tag = '{1}'.format(pid[i], t)")
-            count = cursor.fetchone()
-            count = int(count[0])
-            if count > 0:
-                rate[i] = rate[i] + 1
-    photorate = [(pid[j], rate[j]) for j in range(len(pid))]
-    photorate = sorted(photorate, key=lambda x: (-x[1], x[0]))
-    photorate = photorate[:5]
-    for i in range(len(photorate)):
-        cursor.execute("SELECT photopath FROM Photo WHERE photo_id = '{0}'".format(photorate[i][0]))
-        Rate = cursor.fetchall()
-        count = [item[0] for item in Rate]
-        recommend.append(count)
-    return render_template('recommendPhoto.html', photos = recommend)
+# @app.route('/recommendPhoto', methods = ['GET'])
+# @flask_login.login_required
+# def recommendPhoto():
+    # cursor = conn.cursor()
+    # poptag = popTag()
+    # uid = getUserIdFromEmail(flask_login.current_user.id)
+    # cursor.execute("SELECT photo_id FROM Photo")
+    # photos = cursor.fetchall()
+    # pid = [int(item[0]) for item in photos]
+    # rate = [0] * len(pid)
+    # recommend = []
+    # for i in range(len(pid)):
+        # for t in poptag:
+            # cursor.execute("SELECT COUNT(*) FROM Tag Where photo_id = '{0}' and tag = '{1}'.format(pid[i], t)")
+            # count = cursor.fetchone()
+            # count = int(count[0])
+            # if count > 0:
+                # rate[i] = rate[i] + 1
+    # photorate = [(pid[j], rate[j]) for j in range(len(pid))]
+    # photorate = sorted(photorate, key=lambda x: (-x[1], x[0]))
+    # photorate = photorate[:5]
+    # for i in range(len(photorate)):
+        # cursor.execute("SELECT photopath FROM Photo WHERE photo_id = '{0}'".format(photorate[i][0]))
+        # Rate = cursor.fetchall()
+        # count = [item[0] for item in Rate]
+        # recommend.append(count)
+    # return render_template('recommendPhoto.html', photos = recommend)
 
 
 
