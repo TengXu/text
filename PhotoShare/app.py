@@ -243,7 +243,7 @@ def upload_text():
 		uid = getUserIdFromEmail(flask_login.current_user.id)
 		content = request.form.get('content') 
 		caption = request.form.get('caption') 
-		post_time = datetime.datetime.now();
+		post_time = datetime.datetime.now()
 		cursor = conn.cursor() 
 		cursor.execute( "INSERT INTO Text (content, user_id, caption, post_time) VALUES ('{0}', '{1}', '{2}', '{3}' )".format(content, uid, caption, post_time)) 
 		conn.commit() 
