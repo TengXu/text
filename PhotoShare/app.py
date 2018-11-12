@@ -250,7 +250,7 @@ def upload_text():
 # default page
 @app.route("/", methods=['GET'])
 def hello():
-    return render_template('hello.html', message='Welecome to Photoshare')
+    return render_template('login.html')
 
 #Friends
 @app.route('/searchUsers', methods= ['POST','GET'])
