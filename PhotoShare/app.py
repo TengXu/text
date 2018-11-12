@@ -401,7 +401,7 @@ def deleteText():
     if request.method == 'POST':
         cursor = conn.cursor()
         tid = request.form.get('text_id')
-        cursor.execute("DELETE t FROM Text WHERE t.text_id = tid")
+        cursor.execute("DELETE FROM Text WHERE text_id = tid")
         conn.commit()
         return render_template('listText.html', message = 'Success!')
     else:
