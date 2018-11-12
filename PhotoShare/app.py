@@ -297,6 +297,7 @@ def viewPhoto():
     cursor = conn.cursor()
     cursor.execute("SELECT p.photopath, p.caption, p.photo_id, u.email, u.firstname, u.lastname FROM Photo p, Users u WHERE p.user_id = u.user_id")
     return render_template('viewPhoto.html', photos=cursor.fetchall())
+	
 
 #Album
 # @app.route('/addAlbum', methods = ['POST','GET'])
@@ -348,6 +349,15 @@ def viewPhoto():
     # else:
         # return render_template('addPhoto.html')
 
+@app.route('/listText', methods=['GET'])
+@flask_login.login_required
+def listText():
+    cursor = conn.cursor()
+    uid = getUserIdFromEmail(flask_login.current_user.id)
+    p = getUsersPhotos(uid)
+    cursor.execute("SELECT t.caption, t.content FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
+    return render_template('listText.html', texts = t)
+	
 @app.route('/listPhoto', methods=['GET'])
 @flask_login.login_required
 def listPhoto():

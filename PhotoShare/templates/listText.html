@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Texts</title>
+</head>
+<body>
+<p>Here are your texts</p>
+    <ul>
+    {% for t in texts %}
+        <li>caption: {{t[0]}}</li>
+        <li>content: {{t[1]}}</li>
+    {% endfor %}
+    </ul>
+
+<a href='/'>Home</a>
+</body>
+</html>
