@@ -1,9 +1,10 @@
 body {
-    background-image: url("bg.jpg");
+    /* background-image: url("bg.jpg"); */
 	/* background-size: contain; */
 	background-size: 100%;
 	display: block; 
 	text-align:center;
+	background-color: #3399ff;
 }
 
 h1 {
@@ -11,12 +12,27 @@ h1 {
 }
 
 a {
-	display: block;
+	display: inline-block;
 	text-decoration: none;
+	width: 120px;
+	background-color: pink;
+	text-align: center;
 }
 
+a.profile{
+	padding: 10px 5px;
+	border-radius: 10px;
+}
+
+a.profile:hover {
+	color: rgba(39, 117, 252, 1);
+	padding: 50px 50px;
+	background-color: rgba(78, 172, 253, 1);
+}
+
+
 .title {
-	color: #3399ff;
+	color: white;
 }
 
 .signupbtn {
