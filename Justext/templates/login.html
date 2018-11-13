@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
+	<style>
+		input[type="submit"]{
+			background-color: blue;
+			color: #fff;
+			border-radius: 8px;
+			border: none;
+		}
+	</style>
 </head>
 <body>
 <h1>JusText</h1>
 <h2>Login Page</h2>
 <form action='login' method='POST'>
-<input type='text' name='email' id='email' placeholder='email'></input>
-<input type='password' name='password' id='password' placeholder='password'></input>
+<input type='text' name='email' id='email' placeholder='email'></input> <br>
+<input type='password' name='password' id='password' placeholder='password'></input> <br>
 <input type='submit' name='submit'></input>
 </form></br>
 
-<p><a href='/register'>make an account</a></p>
+<p><a class='signupbtn' href='/register'>make an account</a></p>
 <a href='/profile'>Home</a>
 </body>
 </html>
