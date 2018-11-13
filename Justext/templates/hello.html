@@ -2,6 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
+	<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
 	<title>JusText</title>
 </head>
 
@@ -12,25 +13,19 @@
   <h2 class="title"> Hello {{ name }}!</h2>
 {% endif %}
 
-<ul>
-<li><a href='/upload_text'>Upload texts</a> </li> 
-<li><a href='/logout'>Logout</a></li>
-</ul>
+<a href='/upload_text'>Upload texts</a>
+<a href='/logout'>Logout</a>
 
-<ul>
-<li>Posts</li>
-<li><a href='/listText'>List texts</a> </li>
-</ul>
 
-<ul>
-<li>Friends</li>
-<li><a href='/addFriends'>Add friend</a> </li>
-<li><a href='/listFriends'>Friend List</a> </li>
-</ul>
+<p>Posts</p>
+<a href='/listText'>List texts</a> 
 
-<ul>
-<li>Explore</li>
-<li><a href='/top5Active'>Check top 5 Active Users</a> </li>
-</ul>
+<p>Friends</p>
+<a href='/addFriends'>Add friend</a>
+<a href='/listFriends'>Friend List</a> 
+
+<p>Explore</p>
+<a href='/top5Active'>Check top 5 Active Users</a>
+
 </body>
 </html>
