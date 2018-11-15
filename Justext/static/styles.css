@@ -65,6 +65,10 @@ input[type="submit"]{
 input[type="text"]{
     margin: 5px;
 }
+
+.nomargin{
+	margin: 0px;
+}
 		
 .block{
 	display: block;
