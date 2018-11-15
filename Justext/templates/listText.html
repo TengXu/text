@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>My Texts</title>
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
+	<style>
+		input[type="submit"] {
+		margin: 1px;
+	}
+	</style>
 </head>
 <body>
 <h1>JusText</h1>
@@ -24,22 +29,20 @@
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" class='nomargin' value="View Likes" />
         </form>
-		</li>
-		<li>
-		{% for name in names %}
-		{{name[0]}}
-		{% endfor %}
-		</li>
-		<li>
 		<form method="post" action="/viewComment">
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" class='nomargin' value="View Comments" />
         </form>
 		</li>
 		<li>
+		{% for name in names %}
+		{{name[0]}}
+		{% endfor %}
 		{% for c in comments %}
 		{{c[0]}}: {{c[1]}}
 		{% endfor %}
+		</li>
+		<li>
 		</li>
     {% endfor %}
     </ul>
