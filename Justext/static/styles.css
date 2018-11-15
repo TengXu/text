@@ -71,8 +71,12 @@ button{
 	border-radius: 8px;
 	border: none;
 	margin: 1px;
+	color: #fff;
+	background-color: #1781C4;
 	padding: 6px 10px;
 }
+
+ul{ list-style-type: none; }
 
 .nomargin{
 	margin: 0px;
