@@ -49,6 +49,7 @@ a.profile:hover {
 }
 
 input[type="submit"]{
+	font-size: 1.2em;
     background-color: #1781C4;
     color: #fff;
     border-radius: 8px;
