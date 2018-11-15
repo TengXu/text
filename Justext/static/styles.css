@@ -66,6 +66,14 @@ input[type="text"]{
     margin: 5px;
 }
 
+button{
+	font-size: 0.8em;
+	border-radius: 8px;
+	border: none;
+	margin: 1px;
+	padding: 6px 10px;
+}
+
 .nomargin{
 	margin: 0px;
 }
