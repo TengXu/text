@@ -48,6 +48,13 @@ a.profile:hover {
 	background-color: rgba(6, 137, 219, 1);
 }
 
+input[type="submit"]{
+	background-color: blue;
+	color: #fff;
+	border-radius: 8px;
+	border: none;
+}
+		
 .block{
 	display: block;
 }
