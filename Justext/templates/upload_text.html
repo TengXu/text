@@ -11,10 +11,10 @@
             <h2>Post Texts</h2>
         </div>
             <form method="post" enctype="multipart/form-data" action="/upload_text">
+			    <label for="caption">Enter the caption:</label>
+                <input type="text" name="caption" required='true' /><br />
                 <label for="content">Enter text:</label>
                 <input type="text" name="content" required='true' /><br />
-                <label for="caption">Enter the caption:</label>
-                <input type="text" name="caption" required='true' /><br />
                 <input type="submit" value="upload_text" />
             </form>
 		<a href='/profile'>Home</a>
