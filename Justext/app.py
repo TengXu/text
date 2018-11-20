@@ -265,6 +265,14 @@ def listFriends():
     cursor.execute("SELECT u.username, u.user_id FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
     return render_template('listFriends.html',row=cursor.fetchall())
 	
+@app.route('/countFriends', methods = ['GET'])
+@flask_login.login_required
+def countFriends():
+    cursor = conn.cursor()
+    uid = getUserIdFromEmail(flask_login.current_user.id)
+    cursor.execute("SELECT COUNT(f.user_id) FROM Friends f WHERE f.user_id = '{0}'".format(uid))
+    return render_template('listFriends.html', count=cursor.fetchall())
+	
 @app.route('/listFriendsText', methods = ['POST','GET'])
 @flask_login.login_required	
 def listFriendsText():
@@ -277,12 +285,12 @@ def listFriendsText():
 	else: 
 		return render_template('listFriendsText.html')
 
-#viewPhoto
-@app.route('/viewPhoto', methods = ['GET'])
-def viewPhoto():
-    cursor = conn.cursor()
-    cursor.execute("SELECT p.photopath, p.caption, p.photo_id, u.email, u.firstname, u.lastname FROM Photo p, Users u WHERE p.user_id = u.user_id")
-    return render_template('viewPhoto.html', photos=cursor.fetchall())
+# #viewPhoto
+# @app.route('/viewPhoto', methods = ['GET'])
+# def viewPhoto():
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, u.email, u.firstname, u.lastname FROM Photo p, Users u WHERE p.user_id = u.user_id")
+    # return render_template('viewPhoto.html', photos=cursor.fetchall())
 
 @app.route('/listText', methods=['GET'])
 @flask_login.login_required
@@ -293,32 +301,32 @@ def listText():
     # cursor.execute("SELECT t.caption, t.content, t.post_time, t.text_id FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
 	
-@app.route('/listPhoto', methods=['GET'])
-@flask_login.login_required
-def listPhoto():
-    #print "in"
-    cursor = conn.cursor()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    #print uid
-    p = getUsersPhotos(uid)
-    #print p
-    #cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name FROM Photo p, Album a, Users u WHERE p.user_id = '{0}' and p.album_id = a.album_id and p.user_id = u.user_id".format(uid))
-    #print cursor.fetchall()
-    return render_template('listPhoto.html', photos = p)
+# @app.route('/listPhoto', methods=['GET'])
+# @flask_login.login_required
+# def listPhoto():
+    # #print "in"
+    # cursor = conn.cursor()
+    # uid = getUserIdFromEmail(flask_login.current_user.id)
+    # #print uid
+    # p = getUsersPhotos(uid)
+    # #print p
+    # #cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name FROM Photo p, Album a, Users u WHERE p.user_id = '{0}' and p.album_id = a.album_id and p.user_id = u.user_id".format(uid))
+    # #print cursor.fetchall()
+    # return render_template('listPhoto.html', photos = p)
 
-@app.route('/deletePhoto', methods = ['POST','GET'])
-@flask_login.login_required
-def deletePhoto():
-    if request.method == 'POST':
-        cursor = conn.cursor()
-        #uid = flask_login.current_user.id
-        #print(uid)
-        pid = request.form.get('photo_id')
-        cursor.execute("DELETE FROM Photo p WHERE p.photo_id = pid")
-        conn.commit()
-        return render_template('deletePhoto.html', message = 'Success!')
-    else:
-        return render_template('deletePhoto.html')
+# @app.route('/deletePhoto', methods = ['POST','GET'])
+# @flask_login.login_required
+# def deletePhoto():
+    # if request.method == 'POST':
+        # cursor = conn.cursor()
+        # #uid = flask_login.current_user.id
+        # #print(uid)
+        # pid = request.form.get('photo_id')
+        # cursor.execute("DELETE FROM Photo p WHERE p.photo_id = pid")
+        # conn.commit()
+        # return render_template('deletePhoto.html', message = 'Success!')
+    # else:
+        # return render_template('deletePhoto.html')
 		
 @app.route('/deleteText', methods = ['POST','GET'])
 @flask_login.login_required
