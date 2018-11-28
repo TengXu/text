@@ -88,6 +88,7 @@ ul{ list-style-type: none; }
     padding: 10px 14px;
     font-weight: bold;	
 	display: block;
+	width: 55px;
 }
 
 .posts{
