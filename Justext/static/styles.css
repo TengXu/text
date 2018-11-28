@@ -87,10 +87,12 @@ ul{ list-style-type: none; }
     margin: 10px;
     padding: 10px 14px;
     font-weight: bold;	
+	display: black;
 }
 
 .posts{
-	background-color: rgba(86, 184, 240, 0.5)
+	background-color: rgba(86, 184, 240, 0.5);
+	margin-bottom: 10px;
 }
 
 .nomargin{
