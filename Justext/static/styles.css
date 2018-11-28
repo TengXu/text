@@ -89,6 +89,10 @@ ul{ list-style-type: none; }
     font-weight: bold;	
 }
 
+.posts{
+	background-color: rgba(86, 184, 240, 0.5)
+}
+
 .nomargin{
 	margin: 0px;
 }
