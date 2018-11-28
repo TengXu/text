@@ -17,18 +17,16 @@
 <body>
 <h1>JusText</h1>
 <p>Here are your texts</p>
-    <ul class='posts'>
+    <ul>
     {% for text in texts %}
-        <li>caption: {{text[0]}}</li>
-        <li>content: {{text[1]}}</li>
-		<li>Posted on: {{text[2]}}</li>
+        <li class='posts'>caption: {{text[0]}}</li>
+        <li class='posts'>content: {{text[1]}}</li>
+		<li class='posts'>Posted on: {{text[2]}}</li>
 		<li>        
 		<form method="post" action="/deleteText">
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" class='nomargin' value="Delete" />
         </form>
-		</li>
-		<li>
 		<form method="post" action="/viewLikes">
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>
             <input type="submit" class='nomargin' value="View Likes" />
