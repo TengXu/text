@@ -19,9 +19,9 @@
 <p>Here are your texts</p>
     <ul>
     {% for text in texts %}
-        <li class='posts'>caption: {{text[0]}}</li>
+        <li class='posts_top'>caption: {{text[0]}}</li>
         <li class='posts'>content: {{text[1]}}</li>
-		<li class='posts'>Posted on: {{text[2]}}</li>
+		<li class='posts_bot'>Posted on: {{text[2]}}</li>
 		<li>        
 		<form method="post" action="/deleteText">
             <input type="hidden" value="{{ text[3] }}" name="text_id"></input>

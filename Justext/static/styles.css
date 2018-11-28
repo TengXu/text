@@ -92,7 +92,16 @@ ul{ list-style-type: none; }
 
 .posts{
 	background-color: rgba(86, 184, 240, 0.5);
+}
+
+.posts_bot{
+	background-color: rgba(86, 184, 240, 0.5);
 	margin-bottom: 10px;
+}
+
+.posts_top{
+	background-color: rgba(86, 184, 240, 0.5);
+	margin-top: 10px;
 }
 
 .nomargin{
