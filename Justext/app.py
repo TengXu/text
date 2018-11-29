@@ -253,10 +253,10 @@ def addFriends():
 @flask_login.login_required
 def listFriends():
     cursor = conn.cursor()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT u.username, u.user_id FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
+	uid = getUserIdFromEmail(flask_login.current_user.id)
+	cursor.execute("SELECT u.username, u.user_id FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
 	counts = countFriends(uid)
-    return render_template('listFriends.html', count=counts, row=cursor.fetchall())
+	return render_template('listFriends.html', count=counts, row=cursor.fetchall())
 	
 @app.route('/listFriendsText', methods = ['POST','GET'])
 @flask_login.login_required	
