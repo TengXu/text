@@ -1,14 +1,3 @@
-######################################
-# author ben lawson <balawson@bu.edu> 
-# Edited by: Baichuan Zhou (baichuan@bu.edu) and Craig Einstein <einstein@bu.edu>
-######################################
-# Some code adapted from 
-# CodeHandBook at http://codehandbook.org/python-web-application-development-using-flask-and-mysql/
-# and MaxCountryMan at https://github.com/maxcountryman/flask-login/
-# and Flask Offical Tutorial at  http://flask.pocoo.org/docs/0.10/patterns/fileuploads/
-# see links for further understanding
-###################################################
-
 import flask
 from flask import Flask, Response, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
@@ -19,9 +8,7 @@ import os, base64
 
 mysql = MySQL()
 app = Flask(__name__)
-app.secret_key = 'super secret string'  # Change this!
-
-# These will need to be changed according to your creditionals
+app.secret_key = 'a secret string' 
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'sat2200'
 app.config['MYSQL_DATABASE_DB'] = 'Justext'
@@ -285,13 +272,6 @@ def listFriendsText():
 	else: 
 		return render_template('listFriendsText.html')
 
-# #viewPhoto
-# @app.route('/viewPhoto', methods = ['GET'])
-# def viewPhoto():
-    # cursor = conn.cursor()
-    # cursor.execute("SELECT p.photopath, p.caption, p.photo_id, u.email, u.firstname, u.lastname FROM Photo p, Users u WHERE p.user_id = u.user_id")
-    # return render_template('viewPhoto.html', photos=cursor.fetchall())
-
 @app.route('/listText', methods=['GET'])
 @flask_login.login_required
 def listText():
@@ -300,33 +280,6 @@ def listText():
     t = getUsersTextsByDate(uid)
     # cursor.execute("SELECT t.caption, t.content, t.post_time, t.text_id FROM Text t, Users u WHERE t.user_id = '{0}' and t.user_id = u.user_id".format(uid))
     return render_template('listText.html', texts = t)
-	
-# @app.route('/listPhoto', methods=['GET'])
-# @flask_login.login_required
-# def listPhoto():
-    # #print "in"
-    # cursor = conn.cursor()
-    # uid = getUserIdFromEmail(flask_login.current_user.id)
-    # #print uid
-    # p = getUsersPhotos(uid)
-    # #print p
-    # #cursor.execute("SELECT p.photopath, p.caption, p.photo_id, a.name FROM Photo p, Album a, Users u WHERE p.user_id = '{0}' and p.album_id = a.album_id and p.user_id = u.user_id".format(uid))
-    # #print cursor.fetchall()
-    # return render_template('listPhoto.html', photos = p)
-
-# @app.route('/deletePhoto', methods = ['POST','GET'])
-# @flask_login.login_required
-# def deletePhoto():
-    # if request.method == 'POST':
-        # cursor = conn.cursor()
-        # #uid = flask_login.current_user.id
-        # #print(uid)
-        # pid = request.form.get('photo_id')
-        # cursor.execute("DELETE FROM Photo p WHERE p.photo_id = pid")
-        # conn.commit()
-        # return render_template('deletePhoto.html', message = 'Success!')
-    # else:
-        # return render_template('deletePhoto.html')
 		
 @app.route('/deleteText', methods = ['POST','GET'])
 @flask_login.login_required
