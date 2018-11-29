@@ -177,6 +177,11 @@ def getUserNameFromUid(uid):
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM Users WHERE user_id = '{0}'".format(uid))
     return cursor.fetchone()[0]
+	
+def countFriends(uid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(f.user_id) FROM Friends f WHERE f.user_id = '{0}'".format(uid))
+    return cursor.fetchone()[0]
 
 
 def isEmailUnique(email):
@@ -250,15 +255,8 @@ def listFriends():
     cursor = conn.cursor()
     uid = getUserIdFromEmail(flask_login.current_user.id)
     cursor.execute("SELECT u.username, u.user_id FROM Friends f, Users u WHERE f.user_id = '{0}' and f.friend_id = u.user_id".format(uid))
-    return render_template('listFriends.html',row=cursor.fetchall())
-	
-@app.route('/countFriends', methods = ['GET'])
-@flask_login.login_required
-def countFriends():
-    cursor = conn.cursor()
-    uid = getUserIdFromEmail(flask_login.current_user.id)
-    cursor.execute("SELECT COUNT(f.user_id) FROM Friends f WHERE f.user_id = '{0}'".format(uid))
-    return render_template('listFriends.html', count=cursor.fetchall())
+	counts = countFriends(uid)
+    return render_template('listFriends.html', count=counts, row=cursor.fetchall())
 	
 @app.route('/listFriendsText', methods = ['POST','GET'])
 @flask_login.login_required	
