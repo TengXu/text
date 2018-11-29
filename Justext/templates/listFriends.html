@@ -7,11 +7,7 @@
 </head>
 <body>
 	<h1>JusText</h1>
-    <h2>You have     
-	{% if message %}
-        {{message}}
-    {% endif %} 
-	Friends</h2>
+    <h2>You have {{count}} Friends</h2>
     <ul class='centerpost'>
     {% for friend in row %}
 		<li>
